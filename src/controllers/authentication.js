@@ -61,16 +61,9 @@ export const callback = (req, res) => {
       code: code,
       redirect_uri: redirect_uri,
     });
-
     axios
       .post("https://accounts.spotify.com/api/token", body, config)
-      .then(({ access_token, refresh_token }) => {
-        console.log(
-          queryString.stringify({
-            access_token,
-            refresh_token,
-          })
-        );
+      .then(({ data: { access_token, refresh_token } }) => {
         res.redirect(
           `${frontend_uri}#${queryString.stringify({
             access_token,
