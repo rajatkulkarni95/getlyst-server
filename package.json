@@ -1,0 +1,29 @@
+{
+  "name": "getlyst",
+  "version": "1.0.0",
+  "description": "Hands-Off Spotify Playlist Generator",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "keywords": [
+    "spotify",
+    "node",
+    "playlist"
+  ],
+  "author": "Rajat Kulkarni",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.20.0",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "query-string": "^6.13.5"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  },
+  "type": "module"
+}
