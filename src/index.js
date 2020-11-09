@@ -17,5 +17,3 @@ const initializeExpress = () => {
 };
 
 initializeExpress();
-
-export { app };
