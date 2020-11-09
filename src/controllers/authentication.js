@@ -5,8 +5,9 @@ dotenv.config();
 
 const client_id = process.env.CLIENT_ID;
 const client_secret_id = process.env.CLIENT_SECRET;
-const redirect_uri = process.env.REDIRECT_URI;
-const frontend_uri = process.env.FRONTEND_URI;
+const redirect_uri =
+  process.env.REDIRECT_URI || "http://localhost:8080/callback";
+const frontend_uri = process.env.FRONTEND_URI || "http://localhost:3000/";
 
 const generateRandomString = function (length) {
   let text = "";
@@ -25,7 +26,9 @@ export const login = (req, res) => {
   const state = generateRandomString(16);
   res.cookie(stateKey, state);
 
-  const scope = "user-read-private user-read-email playlist-modify-public";
+  const scope =
+    "user-read-private user-read-email playlist-modify-public playlist-modify-private";
+
   res.redirect(
     `https://accounts.spotify.com/authorize?${queryString.stringify({
       response_type: "code",
