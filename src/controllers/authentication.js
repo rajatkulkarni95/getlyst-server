@@ -26,7 +26,10 @@ const login = (req, res) => {
   const state = generateRandomString(16);
   res.cookie(stateKey, state);
 
-  const scope = "user-read-private user-read-email playlist-modify-public";
+
+
+  const scope =
+    "user-read-private user-read-email playlist-modify-public playlist-modify-private";
 
   res.redirect(
     `https://accounts.spotify.com/authorize?${queryString.stringify({
