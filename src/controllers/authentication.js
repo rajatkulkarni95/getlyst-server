@@ -1,6 +1,6 @@
-import dotenv from "dotenv";
-import queryString from "query-string";
-import axios from "axios";
+const dotenv = require("dotenv");
+const queryString = require("query-string");
+const axios = require("axios");
 dotenv.config();
 
 const client_id = process.env.CLIENT_ID;
@@ -22,7 +22,7 @@ const generateRandomString = function (length) {
 
 const stateKey = "spotify_auth_state";
 
-export const login = (req, res) => {
+const login = (req, res) => {
   const state = generateRandomString(16);
   res.cookie(stateKey, state);
 
@@ -39,7 +39,7 @@ export const login = (req, res) => {
   );
 };
 
-export const callback = (req, res) => {
+const callback = (req, res) => {
   const code = req.query.code || null;
   const state = req.query.state || null;
   const storedState = req.cookies ? req.cookies[stateKey] : null;
@@ -63,6 +63,7 @@ export const callback = (req, res) => {
       code: code,
       redirect_uri: redirect_uri,
     });
+
     axios
       .post("https://accounts.spotify.com/api/token", body, config)
       .then(({ data: { access_token, refresh_token } }) => {
@@ -73,14 +74,14 @@ export const callback = (req, res) => {
           })}`
         );
       })
+
       .catch((error) => {
-        console.log(error);
         res.redirect(`/#${queryString.stringify({ error: "invalid_token" })}`);
       });
   }
 };
 
-export const token_refresh = (req, res) => {
+const token_refresh = (req, res) => {
   const refresh_token = req.query.refresh_token;
 
   const buff = new Buffer.from(`${client_id}:${client_secret_id}`);
@@ -102,3 +103,5 @@ export const token_refresh = (req, res) => {
       res.send({ access_token });
     });
 };
+
+module.exports = { token_refresh, callback, login };

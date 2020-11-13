@@ -1,8 +1,20 @@
-import * as authentication from "./controllers/authentication.js";
+const {
+  login,
+  callback,
+  token_refresh,
+} = require("./controllers/authentication");
 
-export const Routes = (app) => {
-  // Authentication Routes
-  app.get("/login", authentication.login);
-  app.get("/callback", authentication.callback);
-  app.get("/refresh-token", authentication.token_refresh);
+const express = require("express");
+
+const routes = express.Router({
+  mergeParams: true,
+});
+
+routes.get("/", (req, res) => res.send("Testing"));
+routes.get("/login", login);
+routes.get("/callback", callback);
+routes.get("/refresh-token", token_refresh);
+
+module.exports = {
+  routes,
 };
